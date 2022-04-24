@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "any-url-bot"
+version = "0.1.0"
+description = "A simple Telegram bot that opens links like a WebApp"
+authors = ["Dmitry Davis"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^3.0.0b3"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.942"
+pylint = "^2.13.7"
+black = "^22.3.0"
+isort = "^5.10.1"
+
+[tool.black]
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+
+[tool.pylint.message_control]
+disable = ["C0114", "C0115", "C0116"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
