@@ -1,9 +1,9 @@
 format:
-	poetry run black bot.py
-	poetry run isort bot.py
+	poetry run black any_url_bot
+	poetry run isort any_url_bot
 
 lint:
-	poetry run mypy bot.py
-	poetry run black --check --diff bot.py
-	poetry run isort --check --diff bot.py
-	poetry run pylint bot.py
+	poetry run mypy any_url_bot
+	poetry run black --check --diff any_url_bot
+	poetry run isort --check --diff any_url_bot
+	poetry run pylint any_url_bot

@@ -11,5 +11,5 @@ RUN useradd appuser
 USER appuser
 COPY --from=deps /app/.venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
-COPY bot.py ./
-CMD python bot.py
+COPY any_url_bot any_url_bot
+CMD python -m any_url_bot
