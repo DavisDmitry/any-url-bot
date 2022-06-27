@@ -5,18 +5,7 @@ from aiogram.utils import token
 
 from any_url_bot import url
 
-LoggingLevel = Literal[
-    "CRITICAL",
-    "ERROR",
-    "WARNING",
-    "INFO",
-    "DEBUG",
-    "critical",
-    "error",
-    "warning",
-    "info",
-    "debug",
-]
+LoggingLevel = Literal["CRITICAL", "ERROR", "WARNING", "INFO", "DEBUG"]
 
 
 class Config(pydantic.BaseSettings):
@@ -24,6 +13,11 @@ class Config(pydantic.BaseSettings):
     log_level: LoggingLevel = pydantic.Field("INFO", env="LOG_LEVEL")
     bot_token: str = pydantic.Field(..., env="BOT_TOKEN")
     webhook_url: url.HttpsUrl = pydantic.Field(..., env="WEBHOOK_URL")
+
+    @pydantic.validator("log_level", pre=True)
+    @classmethod
+    def validate_log_level(cls, log_level: str) -> str:
+        return log_level.upper()
 
     @pydantic.validator("bot_token")
     @classmethod
