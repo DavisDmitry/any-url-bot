@@ -28,8 +28,6 @@ def main():
     disp.startup.register(on_startup)
     disp.include_router(handlers.router)
 
-    disp.run_polling()
-
     logging.getLogger("aiohttp.access").setLevel(logging.WARNING)
 
     app = web.Application()
