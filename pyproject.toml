@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-aiogram = "^3.0.0b3"
+aiogram = {git = "https://github.com/aiogram/aiogram.git", rev = "416460e0136e0c67f3fc8a041a4aed845c9c3939"}
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.961"

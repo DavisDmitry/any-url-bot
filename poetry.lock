@@ -8,25 +8,31 @@ python-versions = ">=3.6,<4.0"
 
 [[package]]
 name = "aiogram"
-version = "3.0.0b3"
+version = "3.0.0-beta.4"
 description = "Modern and fully asynchronous framework for Telegram Bot API"
 category = "main"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "^3.8"
+develop = false
 
 [package.dependencies]
-aiofiles = ">=0.8.0,<0.9.0"
-aiohttp = ">=3.8.1,<4.0.0"
-magic-filter = ">=1.0.6,<2.0.0"
-pydantic = ">=1.9.0,<2.0.0"
-Pygments = ">=2.11.2,<3.0.0"
+aiofiles = "^0.8.0"
+aiohttp = "^3.8.1"
+magic-filter = "^1.0.7"
+pydantic = "^1.9.1"
 
 [package.extras]
-i18n = ["Babel (>=2.9.1,<3.0.0)"]
-docs = ["Sphinx (>=4.2.0,<5.0.0)", "Sphinx-Substitution-Extensions (>=2020.9.30,<2021.0.0)", "furo (>=2022.4.7,<2023.0.0)", "markdown-include (>=0.6,<0.7)", "pygments (>=2.4,<3.0)", "pymdown-extensions (>=9.3,<10.0)", "sphinx-autobuild (>=2021.3.14,<2022.0.0)", "sphinx-copybutton (>=0.5.0,<0.6.0)", "sphinx-intl (>=2.0.1,<3.0.0)", "sphinx-prompt (>=1.5.0,<2.0.0)", "towncrier (>=21.9.0,<22.0.0)"]
-proxy = ["aiohttp-socks (>=0.7.1,<0.8.0)"]
-redis = ["redis (>=4.2.2,<5.0.0)"]
 fast = ["uvloop (>=0.16.0,<0.17.0)"]
+redis = ["redis (>=4.3.3,<5.0.0)"]
+proxy = ["aiohttp-socks (>=0.7.1,<0.8.0)"]
+i18n = ["Babel (>=2.9.1,<3.0.0)"]
+docs = ["Sphinx (>=4.2.0,<5.0.0)", "sphinx-intl (>=2.0.1,<3.0.0)", "sphinx-autobuild (>=2021.3.14,<2022.0.0)", "sphinx-copybutton (>=0.5.0,<0.6.0)", "furo (>=2022.6.21,<2023.0.0)", "sphinx-prompt (>=1.5.0,<2.0.0)", "Sphinx-Substitution-Extensions (>=2020.9.30,<2021.0.0)", "towncrier (>=21.9.0,<22.0.0)", "pygments (>=2.4,<3.0)", "pymdown-extensions (>=9.5,<10.0)", "markdown-include (>=0.6,<0.7)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/aiogram/aiogram.git"
+reference = "416460e0136e0c67f3fc8a041a4aed845c9c3939"
+resolved_reference = "416460e0136e0c67f3fc8a041a4aed845c9c3939"
 
 [[package]]
 name = "aiohttp"
@@ -279,14 +285,6 @@ dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
 
 [[package]]
-name = "pygments"
-version = "2.12.0"
-description = "Pygments is a syntax highlighting package written in Python."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[[package]]
 name = "pylint"
 version = "2.14.3"
 description = "python code static checker"
@@ -355,17 +353,14 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "df1e0dd44ff71fb3a7e3d95bc3dd072b4c1663c946a0676c74b0ded1f2a05d04"
+content-hash = "c896645261a6afa03c3ad8762ef21a4f6ef3e8cd43924daa5937c3dc5ba27675"
 
 [metadata.files]
 aiofiles = [
     {file = "aiofiles-0.8.0-py3-none-any.whl", hash = "sha256:7a973fc22b29e9962d0897805ace5856e6a566ab1f0c8e5c91ff6c866519c937"},
     {file = "aiofiles-0.8.0.tar.gz", hash = "sha256:8334f23235248a3b2e83b2c3a78a22674f39969b96397126cc93664d9a901e59"},
 ]
-aiogram = [
-    {file = "aiogram-3.0.0b3-py3-none-any.whl", hash = "sha256:78c20c0dc16fc6b39f9de41df8c3bb48170b2566dd60484414d995418811be7d"},
-    {file = "aiogram-3.0.0b3.tar.gz", hash = "sha256:6dc1f0fc829603b6defc93b861e098a2beef1f2e8409be3fe7438c29efc78b2e"},
-]
+aiogram = []
 aiohttp = [
     {file = "aiohttp-3.8.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:1ed0b6477896559f17b9eaeb6d38e07f7f9ffe40b9f0f9627ae8b9926ae260a8"},
     {file = "aiohttp-3.8.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:7dadf3c307b31e0e61689cbf9e06be7a867c563d5a63ce9dca578f956609abf8"},
@@ -747,10 +742,6 @@ pydantic = [
     {file = "pydantic-1.9.1-cp39-cp39-win_amd64.whl", hash = "sha256:61b6760b08b7c395975d893e0b814a11cf011ebb24f7d869e7118f5a339a82e1"},
     {file = "pydantic-1.9.1-py3-none-any.whl", hash = "sha256:4988c0f13c42bfa9ddd2fe2f569c9d54646ce84adc5de84228cfe83396f3bd58"},
     {file = "pydantic-1.9.1.tar.gz", hash = "sha256:1ed987c3ff29fff7fd8c3ea3a3ea877ad310aae2ef9889a119e22d3f2db0691a"},
-]
-pygments = [
-    {file = "Pygments-2.12.0-py3-none-any.whl", hash = "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"},
-    {file = "Pygments-2.12.0.tar.gz", hash = "sha256:5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb"},
 ]
 pylint = [
     {file = "pylint-2.14.3-py3-none-any.whl", hash = "sha256:6757a027e15816be23625b079ebc45464e4c9d9dde0c826d18beee53fe22a2e7"},
