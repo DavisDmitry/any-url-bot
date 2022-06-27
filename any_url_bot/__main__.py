@@ -11,10 +11,15 @@ from any_url_bot import handlers
 
 
 async def on_startup(
-    bot: aiogram.Bot, dispatcher: aiogram.Dispatcher, webhook_url: str
+    bot: aiogram.Bot,
+    dispatcher: aiogram.Dispatcher,
+    webhook_url: str,
+    webhook_secret: str | None,
 ):
     await bot.set_webhook(
-        webhook_url, allowed_updates=dispatcher.resolve_used_update_types()
+        webhook_url,
+        allowed_updates=dispatcher.resolve_used_update_types(),
+        secret_token=webhook_secret,
     )
 
 
@@ -34,7 +39,13 @@ def main():
     aiohttp_server.SimpleRequestHandler(disp, bot, handle_in_background=False).register(
         app, path=path
     )
-    aiohttp_server.setup_application(app, disp, bot=bot, webhook_url=config.webhook_url)
+    aiohttp_server.setup_application(
+        app,
+        disp,
+        bot=bot,
+        webhook_url=config.webhook_url,
+        webhook_secret=config.webhook_secret,
+    )
     web.run_app(app, host="0.0.0.0", port=8080)
 
 
