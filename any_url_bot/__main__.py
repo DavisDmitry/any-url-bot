@@ -29,10 +29,10 @@ def main():
     disp.include_router(handlers.router)
 
     logging.getLogger("aiohttp.access").setLevel(logging.WARNING)
-
     app = web.Application()
+    path = "/" if config.webhook_url.path is None else config.webhook_url.path
     aiohttp_server.SimpleRequestHandler(disp, bot, handle_in_background=False).register(
-        app, path="/"
+        app, path=path
     )
     aiohttp_server.setup_application(app, disp, bot=bot, webhook_url=config.webhook_url)
     web.run_app(app, host="0.0.0.0", port=8080)
