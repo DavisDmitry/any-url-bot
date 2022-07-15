@@ -2,10 +2,8 @@ FROM python:3.10-slim-buster as deps
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 WORKDIR /app
 RUN pip install poetry
-RUN apt update
-RUN apt -y install git
-COPY pyproject.toml ./
-COPY poetry.lock ./
+RUN apt update && apt install -y git
+COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-dev
 
 FROM python:3.10-slim-buster
