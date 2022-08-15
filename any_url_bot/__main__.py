@@ -3,7 +3,7 @@ import logging
 import aiogram
 import aiogram.exceptions
 import aiogram.types
-from aiogram.dispatcher.webhook import aiohttp_server  # type: ignore  # 🙁
+from aiogram.webhook import aiohttp_server
 from aiohttp import web
 
 from any_url_bot import config as _config

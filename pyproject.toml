@@ -7,12 +7,12 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-aiogram = {git = "https://github.com/aiogram/aiogram.git", rev = "416460e0136e0c67f3fc8a041a4aed845c9c3939"}
+aiogram = { version = "^3.0.0b4", allow-prereleases = true }
 
 [tool.poetry.dev-dependencies]
-mypy = "^0.961"
-pylint = "^2.14.3"
-black = "^22.3.0"
+mypy = "^0.971"
+pylint = "^2.14.5"
+black = "^22.6.0"
 isort = "^5.10.1"
 
 [tool.black]
