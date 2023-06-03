@@ -1,6 +1,7 @@
 .*
 !.gitignore
-!.dockerignore
-env
-venv
-__pycache__
+!.github
+!.eslintrc
+!.prettierrc
+node_modules
+*.log
