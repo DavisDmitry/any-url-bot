@@ -1,47 +1,64 @@
-import { Bot, webhookCallback, InlineKeyboard } from 'grammy/web'
+import { Bot, Composer, webhookCallback, InlineKeyboard, GrammyError } from 'grammy/web'
 
-declare global {
-  const BOT_TOKEN: string
-  const SECRET_TOKEN: string // header 'X-Telegram-Bot-Api-Secret-Token'
-}
+const START_TEXT = 'Send me an HTTPS URL'
+const INVALID_URL_TEXT = 'The URL you sent is invalid'
+const INTERNAL_ERROR_TEXT = 'Internal error.'
 
-const startText = 'Send me an HTTPS URL'
-const invalidURLText = 'The URL you sent is invalid'
+const router = new Composer()
 
-const bot = new Bot(BOT_TOKEN)
+router.command('start', ctx => ctx.reply(START_TEXT))
 
-bot.command('start', ctx => {
-  return ctx.reply(startText)
-})
-
-bot.on('message:text', async ctx => {
+router.on('message:text', async ctx => {
   try {
-    const url = validateURL(ctx.msg.text)
-    return ctx.reply(ctx.msg.text, {
+    await ctx.reply(ctx.msg.text, {
       reply_markup: new InlineKeyboard([
-        [{ text: 'WebApp', web_app: { url: url.toString() } }]
+        [
+          {
+            text: 'WebApp',
+            web_app: { url: makeURL(ctx.msg.text) }
+          }
+        ]
       ])
     })
-  } catch {
-    return ctx.reply(invalidURLText)
+  } catch (err) {
+    if (
+      err instanceof GrammyError &&
+      /Bad Request: inline keyboard button Web App URL '.+' is invalid: .+/.test(
+        err.description
+      )
+    ) {
+      return ctx.reply(INVALID_URL_TEXT)
+    }
+    await ctx.reply(INTERNAL_ERROR_TEXT)
+    throw err
   }
 })
 
-addEventListener(
-  'fetch',
-  webhookCallback(bot, 'cloudflare', { secretToken: SECRET_TOKEN })
-)
-
-const urlHostRegex = new RegExp(
-  '(?<ipv4>(?:d{1,3}.){3}d{1,3})(?=$|[/:#?])|' +
-    '(?<ipv6>[[A-F0-9]*:[A-F0-9:]+])(?=$|[/:#?])|' +
-    '(?<domain>[^s/:?#]+)'
-)
-
-function validateURL(input: string): URL {
-  if (!(input.startsWith('http://') || input.startsWith('https://')))
-    input = `https://${input}`
-  const url = new URL(input)
-  if (!urlHostRegex.test(url.hostname)) throw 'Invalid hostname'
+function makeURL(url: string): string {
+  url = url.replace('http://', 'https://')
+  if (!url.startsWith('https://')) {
+    url = `https://${url}`
+  }
   return url
+}
+
+export interface Env {
+  BOT_TOKEN: string
+  SECRET_TOKEN: string // header 'X-Telegram-Bot-Api-Secret-Token'
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const bot = new Bot(env.BOT_TOKEN, {})
+    bot.use(router)
+    const callback = webhookCallback(bot, 'cloudflare-mod', {
+      secretToken: env.SECRET_TOKEN
+    })
+    try {
+      return await callback(request)
+    } catch (err) {
+      console.log(err)
+      return new Response(null, { status: 500 })
+    }
+  }
 }
